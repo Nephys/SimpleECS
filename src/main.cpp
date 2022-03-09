@@ -4,10 +4,14 @@
 
 #include <scene.h>
 
+
+// Config
 const int TOTAL_RUNTIME = 10;
-const int TOTAL_ENTITY_COUNT = 5;
+const int TOTAL_ENTITY_COUNT = 10500;
 const float DEFAULT_GRAVITY_MPS = 9.806;
 
+
+// Sample components
 struct vec3 {
     float x = 0;
     float y = 0;
@@ -28,6 +32,7 @@ struct RigidBody : public Component<RigidBody> {
 struct Script : public Component<Script> {
     char path[512] = "scripts/sample.lua";
 };
+
 
 int main(int argc, char* argv[]) {
     printf("Registering components\n");
@@ -54,7 +59,9 @@ int main(int argc, char* argv[]) {
         position.z = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * -i * 200.5;
 
         entityTransform->position = position;
-        printf("Entity%u starting position: (%.2f, %.2f, %.2f)\n", entity, position.x, position.y, position.z);
+        if(i < 10) {
+            printf("Entity%u starting position: (%.2f, %.2f, %.2f)\n", entity, position.x, position.y, position.z);
+        }
     }
     printf("-------------[ENTITIES]-------------\n\n");
 
@@ -85,7 +92,7 @@ int main(int argc, char* argv[]) {
     }
 
     printf("\n-------------[ENTITIES]-------------\n");
-    for (int i = 0; i < TOTAL_ENTITY_COUNT; i++) {
+    for (int i = 0; i < 10; i++) {
         Entity entity = (Entity)i;
         vec3 position = scene->GetComponent<Transform>(entity)->position;
         printf("Entity%u final position: (%.2f, %.2f, %.2f)\n", entity, position.x, position.y, position.z);
